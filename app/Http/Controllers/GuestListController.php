@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use App\GuestList;
+use Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,7 +16,8 @@ class GuestListController extends Controller
      */
     public function index()
     {
-        return view('guestlist.index');
+      $guestlists=GuestList::all();
+      return view('guestlist.index', compact('guestlists'));
     }
 
     /**
@@ -26,7 +27,7 @@ class GuestListController extends Controller
      */
     public function create()
     {
-        //
+        return view('guestlist.create');
     }
 
     /**
@@ -36,7 +37,8 @@ class GuestListController extends Controller
      */
     public function store()
     {
-        //
+        GuestList::create(Request::all());
+        return $this->redirectTo();
     }
 
     /**
@@ -47,7 +49,8 @@ class GuestListController extends Controller
      */
     public function show($id)
     {
-        //
+        $guest = GuestList::find($id);
+        return view('guestlist.show', compact('guest'));
     }
 
     /**
@@ -58,7 +61,8 @@ class GuestListController extends Controller
      */
     public function edit($id)
     {
-        //
+      $guestlist = GuestList::find($id);
+      return view('guestlist.edit', compact('guestlist'));
     }
 
     /**
@@ -67,9 +71,10 @@ class GuestListController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(GuestList $guest,$id)
     {
-        //
+      $guest->find($id)->update(Request::all());
+      return $this->redirectTo();
     }
 
     /**
@@ -80,6 +85,12 @@ class GuestListController extends Controller
      */
     public function destroy($id)
     {
-        //
+       GuestList::find($id)->delete();
+      return $this->redirectTo();
+    }
+
+    public function redirectTo()
+    {
+      return redirect('guestlists');
     }
 }

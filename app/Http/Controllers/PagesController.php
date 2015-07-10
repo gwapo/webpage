@@ -16,8 +16,19 @@ class PagesController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.index');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function contact()
+    {
+        return view('pages.contact');
+    }
+
 
     /**
      * Show the form for creating a new resource.
